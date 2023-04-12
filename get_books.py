@@ -173,6 +173,12 @@ def get_num_reviews(soup):
     num_reviews = re.search(r"[0-9,]*", reviews_text).group().replace(",", "")
     return int(num_reviews)
 
+def get_description(soup):
+    node = soup.find('div', {'class': 'BookPageMetadataSection__description'})
+    description = node.find('span', {'class': 'Formatted'})
+    return description.text
+
+
 def scrape_book(book_id):
     url = 'https://www.goodreads.com/book/show/' + book_id
     source = urlopen(url)
@@ -199,7 +205,8 @@ def scrape_book(book_id):
             'num_ratings':          get_num_ratings(soup),
             'num_reviews':          get_num_reviews(soup),
             'average_rating':       float(soup.find('div', {'class': 'RatingStatistics__rating'}).string.strip()),
-            'rating_distribution':  get_rating_distribution(soup)}
+            'rating_distribution':  get_rating_distribution(soup),
+            'description':          get_description(soup)}
 
 def condense_books(books_directory_path):
 
