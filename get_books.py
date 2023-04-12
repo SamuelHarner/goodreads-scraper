@@ -72,11 +72,10 @@ def get_shelves(soup):
 
 def get_genres(soup):
     genres = []
-    for node in soup.find_all('div', {'class': 'left'}):
-        current_genres = node.find_all('a', {'class': 'actionLinkLite bookPageGenreLink'})
-        current_genre = ' > '.join([g.text for g in current_genres])
-        if current_genre.strip():
-            genres.append(current_genre)
+    node = soup.find('div', {'class': 'BookPageMetadataSection__genres'})
+    current_genres = node.find_all('span', {'class': 'Button__labelItem'})
+    for g in current_genres[:-1]:
+        genres.append(g.text)
     return genres
 
 
