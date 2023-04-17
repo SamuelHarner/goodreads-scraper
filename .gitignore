@@ -1,4 +1,5 @@
 test-output/test-books/*
 test-output/test-reviews/*
+most-popular-output/*
 geckodriver.log
 .DS_Store
