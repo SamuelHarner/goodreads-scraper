@@ -156,10 +156,10 @@ def get_id(bookid):
     return pattern.search(bookid).group()
 
 def get_cover_image_uri(soup):
-    series = soup.find('img', id='coverImage')
-    if series:
-        series_uri = series.get('src')
-        return series_uri
+    cover = soup.find('img', {'class': 'ResponsiveImage'})
+    if cover:
+        cover_uri = cover.get('src')
+        return cover_uri
     else:
         return ""
 
@@ -188,6 +188,7 @@ def scrape_book(book_id):
 
     return {'book_id_title':        book_id,
             'book_id':              get_id(book_id),
+            'cover_image_uri':      get_cover_image_uri(soup),
             'book_title':           ' '.join(soup.find('h1', {'data-testid': 'bookTitle'}).text.strip().split()),
             'isbn':                 get_isbn(soup),
             'year_first_published': get_year_first_published(soup),
